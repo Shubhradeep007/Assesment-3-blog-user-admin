@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card mt-4">
+            <div class="card-header bg-white">
+                <h4 class="mb-0">Create New Blog</h4>
+            </div>
+            <div class="card-body">
+                <form action="/blogs" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Blog Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Content</label>
+                        <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="image" class="form-label">Blog Image (Optional)</label>
+                        <input class="form-control" type="file" id="image" name="image" accept="image/*">
+                        <div class="form-text">Upload a cover image for your blog post. Max size: 5MB.</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="/dashboard" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success">Publish Blog</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

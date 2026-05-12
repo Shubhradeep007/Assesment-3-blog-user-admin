@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Manage Users</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Joined</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(users && users.length > 0) { %>
+                        <% users.forEach(u => { %>
+                            <tr>
+                                <td><%= u.name %></td>
+                                <td><%= u.email %></td>
+                                <td>
+                                    <% if(u._id.toString() !== user._id.toString()) { %>
+                                        <form action="/users/<%= u._id %>?_method=PUT" method="POST" class="d-inline">
+                                            <select name="role" class="form-select form-select-sm d-inline w-auto" onchange="this.form.submit()">
+                                                <option value="user" <%= u.role === 'user' ? 'selected' : '' %>>User</option>
+                                                <option value="admin" <%= u.role === 'admin' ? 'selected' : '' %>>Admin</option>
+                                            </select>
+                                        </form>
+                                    <% } else { %>
+                                        <span class="badge <%= u.role === 'admin' ? 'bg-danger' : 'bg-primary' %>"><%= u.role %></span>
+                                    <% } %>
+                                </td>
+                                <td><%= new Date(u.createdAt).toLocaleDateString() %></td>
+                                <td>
+                                    <% if(u._id.toString() !== user._id.toString()) { %>
+                                        <form action="/users/<%= u._id %>?_method=DELETE" method="POST" class="d-inline">
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                                        </form>
+                                    <% } else { %>
+                                        <span class="text-muted">Current User</span>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="5" class="text-center">No users found</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

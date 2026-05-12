@@ -1,0 +1,34 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>All Blogs</h2>
+    <% if(user) { %>
+        <a href="/blogs/create" class="btn btn-success">Create New Blog</a>
+    <% } %>
+</div>
+
+<div class="row">
+    <% if(blogs && blogs.length > 0) { %>
+        <% blogs.forEach(blog => { %>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <% if(blog.image) { %>
+                        <img src="<%= blog.image %>" class="card-img-top" alt="Blog Image" style="height: 200px; object-fit: cover;">
+                    <% } else { %>
+                        <img src="https://via.placeholder.com/400x200?text=No+Image" class="card-img-top" alt="Placeholder" style="height: 200px; object-fit: cover;">
+                    <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title"><%= blog.title %></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">By <%= blog.author ? blog.author.name : 'Unknown User' %></h6>
+                        <p class="card-text"><%= blog.content.substring(0, 100) %>...</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a href="/blogs/<%= blog._id %>" class="btn btn-primary w-100">Read More</a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <div class="col-12 text-center">
+            <p class="lead">No blogs available at the moment.</p>
+        </div>
+    <% } %>
+</div>

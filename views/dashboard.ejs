@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <% if(user.profileImage) { %>
+                    <img src="<%= user.profileImage %>" alt="Profile Image" class="rounded-circle img-fluid mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                <% } else { %>
+                    <img src="https://via.placeholder.com/150" alt="Profile Placeholder" class="rounded-circle img-fluid mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                <% } %>
+                <h4 class="card-title"><%= user.name %></h4>
+                <p class="text-muted"><%= user.email %></p>
+                <span class="badge bg-primary"><%= user.role.toUpperCase() %></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3><%= user.role === 'admin' ? 'Manage All Blogs' : 'My Blogs' %></h3>
+            <a href="/blogs/create" class="btn btn-success">Create New Blog</a>
+        </div>
+        
+        <% if(blogs && blogs.length > 0) { %>
+            <div class="row">
+                <% blogs.forEach(blog => { %>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <% if(blog.image) { %>
+                                <img src="<%= blog.image %>" class="card-img-top" alt="Blog Image" style="height: 200px; object-fit: cover;">
+                            <% } %>
+                            <div class="card-body">
+                                <h5 class="card-title"><%= blog.title %></h5>
+                                <% if (user.role === 'admin') { %>
+                                    <div class="mb-2">
+                                        <span class="badge bg-secondary">Author: <%= blog.author ? blog.author.name : 'Unknown' %></span>
+                                        <div class="text-muted small mt-1"><%= blog.author ? blog.author.email : '' %></div>
+                                    </div>
+                                <% } %>
+                                <p class="card-text"><%= blog.content.substring(0, 100) %>...</p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                <a href="/blogs/<%= blog._id %>" class="btn btn-sm btn-info text-white">View</a>
+                                <a href="/blogs/edit/<%= blog._id %>" class="btn btn-sm btn-warning">Edit</a>
+                                <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this blog?');">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p>No blogs found. <a href="/blogs/create">Start writing!</a></p>
+        <% } %>
+    </div>
+</div>

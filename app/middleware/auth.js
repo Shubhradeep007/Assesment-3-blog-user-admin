@@ -10,7 +10,7 @@ const requireAuth = async (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || "supersecretjwt");
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.id).select("-password");
 
         if (!user || user.isDeleted) {
@@ -34,7 +34,7 @@ const checkUser = async (req, res, next) => {
     const token = req.cookies.token;
     if (token) {
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET || "supersecretjwt");
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
             const user = await User.findById(decoded.id).select("-password");
             if (user && !user.isDeleted) {
                 req.user = user;

@@ -17,8 +17,7 @@ const register = async (req, res) => {
 
         const profileImage = req.file ? req.file.path : null;
 
-        // Ensure first user gets admin role or let it be 'user' by default
-        // For testing, let's just use default 'user' or we can add a secret code for admin
+
         let role = "user";
         if (email === "admin@admin.com") role = "admin"; // Hardcode first admin for ease
 
@@ -61,7 +60,7 @@ const login = async (req, res) => {
             role: user.role
         };
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET || "supersecretjwt", { expiresIn: "1d" });
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" });
         
         res.cookie("token", token, {
             httpOnly: true,

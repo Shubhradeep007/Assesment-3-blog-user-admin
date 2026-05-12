@@ -5,12 +5,10 @@ const { createBlog, getAllBlogs, getBlogById, updateBlog, deleteBlog } = require
 const { requireAuth } = require("../middleware/auth");
 const Blog = require("../models/Blog");
 
-// View route for creating a blog (must be before /:id)
 router.get("/create", requireAuth, (req, res) => {
     res.render("blogs/create");
 });
 
-// View route for editing a blog
 router.get("/edit/:id", requireAuth, async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id);
@@ -31,7 +29,7 @@ router.get("/edit/:id", requireAuth, async (req, res) => {
     }
 });
 
-// API & View Routes combined for simplicity
+// API & View Routes combined
 router.get("/", getAllBlogs);
 router.post("/", requireAuth, upload.single("image"), createBlog);
 

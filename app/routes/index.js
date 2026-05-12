@@ -3,7 +3,6 @@ const router = express.Router();
 const { checkUser, requireAuth } = require("../middleware/auth");
 const Blog = require("../models/Blog");
 
-// Apply checkUser to all GET routes to populate req.user if token exists
 router.use(checkUser);
 
 router.get("/", (req, res) => {
